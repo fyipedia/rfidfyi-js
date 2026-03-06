@@ -1,0 +1,45 @@
+{
+  "name": "rfidfyi",
+  "version": "0.1.0",
+  "description": "TypeScript API client for RFIDFYI -- RFID tags, readers, frequency bands, EPC standards, and use cases. Zero dependencies.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "rfid",
+    "epc",
+    "uhf",
+    "nfc",
+    "tag",
+    "reader",
+    "frequency",
+    "api-client",
+    "rfidfyi"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fyipedia/rfidfyi-js"
+  },
+  "homepage": "https://rfidfyi.com",
+  "license": "MIT",
+  "author": "FYIPedia",
+  "devDependencies": {
+    "tsup": "^8.0",
+    "typescript": "^5.7",
+    "vitest": "^3.0"
+  }
+}

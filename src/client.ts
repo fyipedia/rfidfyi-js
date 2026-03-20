@@ -1,22 +1,20 @@
 /**
- * RFIDFYI API client -- TypeScript wrapper for rfidfyi.com REST API.
+ * RFIDFYI API client — TypeScript wrapper for rfidfyi.com REST API.
  *
  * Zero dependencies. Uses native `fetch`.
+ *
+ * @example
+ * ```ts
+ * import { RFIDFYI } from "rfidfyi";
+ * const api = new RFIDFYI();
+ * const items = await api.search("query");
+ * ```
  */
 
-import type {
-  CompareResult,
-  EpcDetail,
-  FamilyDetail,
-  FrequencyDetail,
-  GlossaryTerm,
-  RandomResult,
-  ReaderDetail,
-  SearchResult,
-  StandardDetail,
-  TagDetail,
-  UseCaseDetail,
-} from "./types.js";
+/** Generic API response type. */
+export interface ApiResponse {
+  [key: string]: unknown;
+}
 
 export class RFIDFYI {
   private baseUrl: string;
@@ -25,7 +23,7 @@ export class RFIDFYI {
     this.baseUrl = baseUrl.replace(/\/+$/, "");
   }
 
-  private async get<T>(
+  private async get<T = ApiResponse>(
     path: string,
     params?: Record<string, string>,
   ): Promise<T> {
@@ -38,66 +36,140 @@ export class RFIDFYI {
     return res.json() as Promise<T>;
   }
 
-  /** Search RFID tags, readers, standards, and glossary terms. */
-  async search(query: string): Promise<SearchResult> {
-    return this.get<SearchResult>("/api/search/", { q: query });
+  // -- Endpoints ----------------------------------------------------------
+
+  /** List all antenna types. */
+  async listAntennaTypes(params?: Record<string, string>): Promise<ApiResponse> {
+    return this.get("/api/v1/antenna-types/", params);
   }
 
-  /** Get a glossary term by slug. */
-  async glossaryTerm(slug: string): Promise<GlossaryTerm> {
-    return this.get<GlossaryTerm>(`/api/term/${slug}/`);
+  /** Get antenna type by slug. */
+  async getAntennaType(slug: string): Promise<ApiResponse> {
+    return this.get(`/api/v1/antenna-types/${slug}/`);
   }
 
-  /** Get RFID tag detail by slug. */
-  async tag(slug: string): Promise<TagDetail> {
-    return this.get<TagDetail>(`/api/tag/${slug}/`);
+  /** List all epc schemes. */
+  async listEpcSchemes(params?: Record<string, string>): Promise<ApiResponse> {
+    return this.get("/api/v1/epc-schemes/", params);
   }
 
-  /** Get RFID reader detail by slug. */
-  async reader(slug: string): Promise<ReaderDetail> {
-    return this.get<ReaderDetail>(`/api/reader/${slug}/`);
+  /** Get epc scheme by slug. */
+  async getEpcScheme(slug: string): Promise<ApiResponse> {
+    return this.get(`/api/v1/epc-schemes/${slug}/`);
   }
 
-  /** Get RFID tag family detail by slug. */
-  async family(slug: string): Promise<FamilyDetail> {
-    return this.get<FamilyDetail>(`/api/family/${slug}/`);
+  /** List all faqs. */
+  async listFaqs(params?: Record<string, string>): Promise<ApiResponse> {
+    return this.get("/api/v1/faqs/", params);
   }
 
-  /** Get frequency band detail by slug. */
-  async frequency(slug: string): Promise<FrequencyDetail> {
-    return this.get<FrequencyDetail>(`/api/frequency/${slug}/`);
+  /** Get faq by slug. */
+  async getFaq(slug: string): Promise<ApiResponse> {
+    return this.get(`/api/v1/faqs/${slug}/`);
   }
 
-  /** Get RFID standard detail by slug. */
-  async standard(slug: string): Promise<StandardDetail> {
-    return this.get<StandardDetail>(`/api/standard/${slug}/`);
+  /** List all frequency bands. */
+  async listFrequencyBands(params?: Record<string, string>): Promise<ApiResponse> {
+    return this.get("/api/v1/frequency-bands/", params);
   }
 
-  /** Get EPC standard detail by slug. */
-  async epc(slug: string): Promise<EpcDetail> {
-    return this.get<EpcDetail>(`/api/epc/${slug}/`);
+  /** Get frequency band by slug. */
+  async getFrequencyBand(slug: string): Promise<ApiResponse> {
+    return this.get(`/api/v1/frequency-bands/${slug}/`);
   }
 
-  /** Get use case detail by slug. */
-  async useCase(slug: string): Promise<UseCaseDetail> {
-    return this.get<UseCaseDetail>(`/api/use-case/${slug}/`);
+  /** List all glossary. */
+  async listGlossary(params?: Record<string, string>): Promise<ApiResponse> {
+    return this.get("/api/v1/glossary/", params);
   }
 
-  /** Compare two RFID tags. */
-  async compare(slugA: string, slugB: string): Promise<CompareResult> {
-    return this.get<CompareResult>("/api/compare/", {
-      a: slugA,
-      b: slugB,
-    });
+  /** Get term by slug. */
+  async getTerm(slug: string): Promise<ApiResponse> {
+    return this.get(`/api/v1/glossary/${slug}/`);
   }
 
-  /** Get a random RFID tag. */
-  async random(): Promise<RandomResult> {
-    return this.get<RandomResult>("/api/random/");
+  /** List all guides. */
+  async listGuides(params?: Record<string, string>): Promise<ApiResponse> {
+    return this.get("/api/v1/guides/", params);
   }
 
-  /** Get the OpenAPI 3.1.0 specification. */
-  async openapi(): Promise<Record<string, unknown>> {
-    return this.get<Record<string, unknown>>("/api/openapi.json");
+  /** Get guide by slug. */
+  async getGuide(slug: string): Promise<ApiResponse> {
+    return this.get(`/api/v1/guides/${slug}/`);
+  }
+
+  /** List all industries. */
+  async listIndustries(params?: Record<string, string>): Promise<ApiResponse> {
+    return this.get("/api/v1/industries/", params);
+  }
+
+  /** Get industry by slug. */
+  async getIndustry(slug: string): Promise<ApiResponse> {
+    return this.get(`/api/v1/industries/${slug}/`);
+  }
+
+  /** List all manufacturers. */
+  async listManufacturers(params?: Record<string, string>): Promise<ApiResponse> {
+    return this.get("/api/v1/manufacturers/", params);
+  }
+
+  /** Get manufacturer by slug. */
+  async getManufacturer(slug: string): Promise<ApiResponse> {
+    return this.get(`/api/v1/manufacturers/${slug}/`);
+  }
+
+  /** List all readers. */
+  async listReaders(params?: Record<string, string>): Promise<ApiResponse> {
+    return this.get("/api/v1/readers/", params);
+  }
+
+  /** Get reader by slug. */
+  async getReader(slug: string): Promise<ApiResponse> {
+    return this.get(`/api/v1/readers/${slug}/`);
+  }
+
+  /** List all standards. */
+  async listStandards(params?: Record<string, string>): Promise<ApiResponse> {
+    return this.get("/api/v1/standards/", params);
+  }
+
+  /** Get standard by slug. */
+  async getStandard(slug: string): Promise<ApiResponse> {
+    return this.get(`/api/v1/standards/${slug}/`);
+  }
+
+  /** List all tag families. */
+  async listTagFamilies(params?: Record<string, string>): Promise<ApiResponse> {
+    return this.get("/api/v1/tag-families/", params);
+  }
+
+  /** Get tag family by slug. */
+  async getTagFamily(slug: string): Promise<ApiResponse> {
+    return this.get(`/api/v1/tag-families/${slug}/`);
+  }
+
+  /** List all tags. */
+  async listTags(params?: Record<string, string>): Promise<ApiResponse> {
+    return this.get("/api/v1/tags/", params);
+  }
+
+  /** Get tag by slug. */
+  async getTag(slug: string): Promise<ApiResponse> {
+    return this.get(`/api/v1/tags/${slug}/`);
+  }
+
+  /** List all use cases. */
+  async listUseCases(params?: Record<string, string>): Promise<ApiResponse> {
+    return this.get("/api/v1/use-cases/", params);
+  }
+
+  /** Get use case by slug. */
+  async getUseCase(slug: string): Promise<ApiResponse> {
+    return this.get(`/api/v1/use-cases/${slug}/`);
+  }
+
+  /** Search across all content. */
+  async search(query: string, params?: Record<string, string>): Promise<ApiResponse> {
+    return this.get("/api/v1/search/", { q: query, ...params });
   }
 }

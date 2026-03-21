@@ -7,9 +7,7 @@
 
 TypeScript API client for [RFIDFYI](https://rfidfyi.com) -- the comprehensive RFID reference covering tags (passive, active, semi-passive), readers, frequency bands (LF 125 kHz, HF 13.56 MHz, UHF 860-960 MHz), EPC/GS1 standards, ISO 18000 series, and industry use cases from supply chain to access control. Zero dependencies, uses native `fetch`.
 
-> **Explore RFID at [rfidfyi.com](https://rfidfyi.com)** -- [Tags](https://rfidfyi.com/tags/) | [Readers](https://rfidfyi.com/readers/) | [Glossary](https://rfidfyi.com/glossary/) | [API Docs](https://rfidfyi.com/developers/)
-
-## Install
+> **Explore RFID at [rfidfyi.com](https://rfidfyi.com)** -- | | [Glossary](https://rfidfyi.com/glossary/) | ## Install
 
 ```bash
 npm install rfidfyi
